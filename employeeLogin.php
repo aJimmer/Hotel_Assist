@@ -24,17 +24,22 @@ if(isset($_POST['submit-login'])) {
 <html>
 <head>
 <title>Login</title>
+<meta charset="utf-8">
+<link href="casita.css" rel="stylesheet">
 </head>
 <body>
+
 <?php
 if($error != "")
 {
 	echo $error."<br/>";
 }
 ?>
+<div id="wrapper">
 <form action="employeeLogin.php" method="post">
 Employee ID: <input type="text" name="employee_id" value="<?php echo $employee_id; ?>" /><br/>
 <input type="submit" value="Login" name="submit-login" />
 </form>
+</div>
 </body>
 </html>

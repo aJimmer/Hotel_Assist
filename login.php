@@ -26,6 +26,8 @@ if(isset($_POST['submit-login'])) {
 <html>
 <head>
 <title>Login</title>
+<meta charset="utf-8">
+<link href="casita.css" rel="stylesheet">
 </head>
 <body>
 <?php
@@ -34,10 +36,14 @@ if($error != "")
 	echo $error."<br/>";
 }
 ?>
+<div id=wrapper>
 <form action="login.php" method="post">
+
 Username: <input type="text" name="username" value="<?php echo $username; ?>" /><br/>
 Password: <input type="password" name="password" value="<?php echo $password; ?>" /><br/>
 <input type="submit" value="Login" name="submit-login" />
+
 </form>
+</div>
 </body>
 </html>

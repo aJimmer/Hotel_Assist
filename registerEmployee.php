@@ -63,19 +63,24 @@ if(isset($_POST['submit-form'])) {
 <html>
 	<head>
 		<title>Registration</title>
+		<meta charset="utf-8">
+<link href="casita.css" rel="stylesheet">
 	</head>
 	
 	<body>
 		<?php echo ($error != "") ? $error : ""; ?>
+		<div id="wrapper">
 		<form action="registerEmployee.php" method="post">
 	
-			Employee ID: <input type="text" value="<?php echo $employee_id; ?>" name="username" /><br/>
+			Employee Registration Form<br/>
+			Employee ID: <input type="text" value="<?php echo $employee_id; ?>" name="employee_id" /><br/>
 			Name: <input type="text" value="<?php echo $name; ?>" name="name" /><br/>
 			Address: <input type="text" value="<?php echo $address; ?>" name="address" /><br/>
 			Phone: <input type="text" value="<?php echo $phone?>" name="phone" /><br/>
-			Hotel ID: <input type="text" value="<?php echo $hotel_id; ?>" name="type" /><br/>
+			Hotel ID: <input type="text" value="<?php echo $hotel_id; ?>" name="hotel_id" /><br/>
 		<input type="submit" value="Register" name="submit-form" />
 	
 		</form>
+		</div>
 	</body>
 </html>

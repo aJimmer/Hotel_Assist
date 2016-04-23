@@ -28,7 +28,8 @@ if(isset($_POST['submit-form'])) {
 	//check to see if user name already exists
 	if($userTools->checkUsernameExists($username))
 	{
-	    $error .= "That username is already taken.<br/> \n\r";
+	    $error .= "That u
+	    		sername is already taken.<br/> \n\r";
 	    $success = false;
 	}
 
@@ -68,10 +69,13 @@ if(isset($_POST['submit-form'])) {
 <html>
 	<head>
 		<title>Registration</title>
+		<meta charset="utf-8">
+<link href="casita.css" rel="stylesheet">
 	</head>
 	
 	<body>
 		<?php echo ($error != "") ? $error : ""; ?>
+		<div id= "wrapper">
 		<form action="register.php" method="post">
 	
 			Guest ID: <input type="text" value="<?php echo $guest_id; ?>" name="guest_id" /><br/>
@@ -80,7 +84,7 @@ if(isset($_POST['submit-form'])) {
 			Password (confirm): <input type="password" value="<?php echo $password_confirm; ?>" name="password-confirm" /><br/>
 			E-Mail: <input type="text" value="<?php echo $email; ?>" name="email" /><br/>
 		<input type="submit" value="Register" name="submit-form" />
-	
 		</form>
+		</div>
 	</body>
 </html>
