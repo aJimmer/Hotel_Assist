@@ -1,22 +1,25 @@
 <?php
 //DB.class.php
 
+/** Db Class needs a delete function**/
+
 class DB {
 
-	protected $db_name = 'cs332u13';
-	protected $db_user = 'cs332u13';
-	protected $db_pass = 'eoneiwei';
-	protected $db_host = 'cs332u13@137.151.28.102';
-	//protected $db_name = 'project';
-	//protected $db_user = 'project';
-	//protected $db_pass = 'password';
-	//protected $db_host = '172.88.192.120';
+	//protected $db_name = 'cs332u13';
+	//protected $db_user = 'cs332u13';
+	//protected $db_pass = 'eoneiwei';
+	//protected $db_host = '137.151.28.102';
+	protected $db_name = 'project';
+	protected $db_user = 'project';
+	protected $db_pass = 'password';
+	protected $db_host = '172.88.192.120';
 
+	
 	//open a connection to the database. Make sure this is called
 	//on every page that needs to use the database.
 	public function connect() {
-		$connection = mysql_connect($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
-		//mysql_select_db($this<db_name);
+		$connection = mysql_connect($this->db_host, $this->db_user, $this->db_pass);
+		mysql_select_db($this->db_name);
 
 		return true;
 	}
@@ -44,7 +47,7 @@ class DB {
 		if(mysql_num_rows($result) == 1)
 			return $this->processRowSet($result, true);
 
-		return $this>processRowSet($result);
+		return $this->processRowSet($result);
 	}
 
 	//Updates a current row in the database.

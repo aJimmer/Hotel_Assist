@@ -1,8 +1,9 @@
 <?php
 //UserTools.class.php
-
+require_once 'global.inc.php';
 require_once 'User.class.php';
-require_once 'DB.class.php';
+require_once 'Db.class.php';
+require_once 'Employee.class.php';
 
 class UserTools {
 
@@ -15,28 +16,28 @@ class UserTools {
 	{
 
 		$hashedPassword = md5($password);
-		$result = mysql_query("SELECT * FROM users WHERE username = '$username' AND password = '$hashedPassword'");
+		$result = mysql_query("SELECT * FROM project.user WHERE username = '$username' AND password = '$password'");
 
 		if(mysql_num_rows($result) == 1)
 		{
-			$_SESSION["user"] = serialize(new User(mysql_fetch_assoc($result)));
-			$_SESSION["login_time"] = time();
-			$_SESSION["logged_in"] = 1;
+			$_SESSION['user'] = serialize(new User(mysql_fetch_assoc($result)));
+			$_SESSION['login_time'] = time();
+			$_SESSION['logged_in'] = 1;
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	public function employeeLogin($employeeID)
+	public function employeeLogin($employee_id)
 	{
-		$result = mysql_query("SELECT * FROM Employee WHERE employeeID = '$employeeID'");
+		$result = mysql_query("SELECT * FROM project.employee WHERE employee_id = '$employee_id'");
 	
 		if(mysql_num_rows($result) == 1)
 		{
-			$_SESSION["empoyee"] = serialize(new Emloyee(mysql_fetch_assoc($result)));
-			$_SESSION["login_time"] = time();
-			$_SESSION["logged_in"] = 1;
+			$_SESSION['employee'] = serialize(new Employee(mysql_fetch_assoc($result)));
+			$_SESSION['login_time'] = time();
+			$_SESSION['logged_in'] = 1;
 			return true;
 		}else{
 			return false;
@@ -62,7 +63,7 @@ class UserTools {
 	//Check to see if a username exists.
 	//This is called during registration to make sure all user names are unique.
 	public function checkUsernameExists($username) {
-		$result = mysql_query("SELECT id FROM users WHERE username = '$username'");
+		$result = mysql_query("SELECT username FROM project.user WHERE username = '$username'");
 		if(mysql_num_rows($result) == 0)
 		{
 			return false;
@@ -71,18 +72,9 @@ class UserTools {
 		}
 	}
 	
-	public function checkUsernameExists($username) {
-		$result = mysql_query("SELECT id FROM users WHERE username = '$username'");
-		if(mysql_num_rows($result) == 0)
-		{
-			return false;
-		}else{
-			return true;
-		}
-	}
 	
-	public function checkEmployeeIdExists($employeeID) {
-		$result = mysql_query("SELECT employeeID FROM Employee WHERE employeeID = '$employeeID'");
+	public function checkEmployeeIdExists($employee_id) {
+		$result = mysql_query("SELECT employee_id FROM project.employee WHERE employee_id = '$employee_id'");
 		if(mysql_num_rows($result) == 0)
 		{
 			return false;
@@ -93,10 +85,10 @@ class UserTools {
 
 	//get a user
 	//returns a User object. Takes the users id as an input
-	public function getUser($id)
+	public function getUser($username)
 	{
 		$db = new DB();
-		$result = $db->select('users', "id = $id");
+		$result = $db->select('project.user', "username = '$username'");
 
 		return new User($result);
 	}
@@ -104,7 +96,7 @@ class UserTools {
 	public function getEmployee($employeeID)
 	{
 		$db = new DB();
-		$result = $db->select('Employee', "employeeID = $employeeID");
+		$result = $db->select('project.employee', "employee_id = '$employeeID'");
 	
 		return new Employee($result);
 	}

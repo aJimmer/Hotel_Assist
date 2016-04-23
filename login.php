@@ -1,7 +1,7 @@
 <?php
 //login.php
 
-require_once 'Hotel_Assist/global.inc.php';
+require_once 'global.inc.php';
 
 $error = "";
 $username = "";
@@ -16,7 +16,7 @@ if(isset($_POST['submit-login'])) {
 	$userTools = new UserTools();
 	if($userTools->login($username, $password)){
 		//successful login, redirect them to a page
-		header("Location: guestAction.php");
+		header("Location: guest.php");
 	}else{
 		$error = "Incorrect username or password. Please try again.";
 	}

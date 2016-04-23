@@ -3,6 +3,7 @@
 require_once 'global.inc.php';
 
 //initialize php variables used in the form
+$guest_id = "";
 $username = "";
 $password = "";
 $password_confirm = "";
@@ -13,6 +14,7 @@ $error = "";
 if(isset($_POST['submit-form'])) { 
 
 	//retrieve the $_POST variables
+	$guest_id = $_POST['guest_id'];
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$password_confirm = $_POST['password-confirm'];
@@ -39,8 +41,9 @@ if(isset($_POST['submit-form'])) {
 	if($success)
 	{
 	    //prep the data for saving in a new user object
+	    $data['guest_id'] = $guest_id;
 	    $data['username'] = $username;
-	    $data['password'] = md5($password); //encrypt the password for storage
+	    $data['password'] = $password; //encrypt the password for storage
 	    $data['email'] = $email;
 
 	    //create the new user object
@@ -71,6 +74,7 @@ if(isset($_POST['submit-form'])) {
 		<?php echo ($error != "") ? $error : ""; ?>
 		<form action="register.php" method="post">
 	
+			Guest ID: <input type="text" value="<?php echo $guest_id; ?>" name="guest_id" /><br/>
 			Username: <input type="text" value="<?php echo $username; ?>" name="username" /><br/>
 			Password: <input type="password" value="<?php echo $password; ?>" name="password" /><br/>
 			Password (confirm): <input type="password" value="<?php echo $password_confirm; ?>" name="password-confirm" /><br/>

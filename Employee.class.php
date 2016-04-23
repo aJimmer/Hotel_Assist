@@ -1,30 +1,27 @@
 <?php
 //Employee.class.php
 
-require_once 'DB.class.php';
+require_once 'Db.class.php';
+
+/**variables need to be updated according to attributes in tables**/
 
 
 class Employee {
 
-	public $employeeID;
+	public $employee_id;
 	public $name;
 	public $address;
 	public $phone;
-	public $type;
-	public $department;
-	public $gender;
+	public $hotel_id;
 
 	//Constructor is called whenever a new object is created.
 	//Takes an associative array with the DB row as an argument.
 	function __construct($data) {
-		$this->employeeID = (isset($data['employeeID'])) ? $data['employeeID'] : "";
+		$this->employee_id = (isset($data['employee_id'])) ? $data['employee_id'] : "";
 		$this->name = (isset($data['name'])) ? $data['name'] : "";
 		$this->address= (isset($data['address'])) ? $data['address'] : "";
 		$this->phone = (isset($data['phone'])) ? $data['phone'] : "";
-		$this->type = (isset($data['type'])) ? $data['type'] : "";
-		$this->department = (isset($data['department'])) ? $data['department'] : "";
-		$this->gender = (isset($data['gender'])) ? $data['gender'] : "";
-		
+		$this->hotel_id = (isset($data['hotel_id'])) ? $data['hotel_id'] : "";
 	}
 
 	public function save($isNewUser = false) {
@@ -36,32 +33,27 @@ class Employee {
 		if(!$isNewUser) {
 			//set the data array
 			$data = array(
-					"employeeID" => "'$this->employeeID'",
+					"employee_id" => "'$this->employee_id'",
 					"name" => "'$this->name'",
 					"address" => "'$this->address'",
 					"phone" => "'$this->phone'",
-					"type" => "'$this->type'",
-					"department" => "'$this->department'",
-					"gender" => "'$this->gender'",
+					"hotel_id" => "'$this->hotel_id'",
 			);
 				
 			//update the row in the database
-			$db->update($data, 'Employee', 'EmployeeID = '.$this->employeeID);
+			$db->update($data, 'project.employee', 'employee_id = '.$this->employee_id);
 		}else {
 			//if the user is being registered for the first time.
 			$data = array(
-				"employeeID" => "'$this->employeeID'",
+					"employee_id" => "'$this->employee_id'",
 					"name" => "'$this->name'",
 					"address" => "'$this->address'",
 					"phone" => "'$this->phone'",
-					"type" => "'$this->type'",
-					"department" => "'$this->department'",
-					"gender" => "'$this->gender'",
-					//"join_date" => "'".date("Y-m-d H:i:s",time())."'"
-							);
+					"hotel_id" => "'$this->hotel_id'",
+				);
 				
-			$this->employeeID = $db->insert($data, 'Employee');
-			//$this->joinDate = time();
+			$this->employee_id = $db->insert($data, 'project.employee');
+		
 		}
 		return true;
 	}

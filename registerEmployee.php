@@ -3,26 +3,22 @@
 require_once 'global.inc.php';
 
 //initialize php variables used in the form
-$employeeID = "";
+$employee_id = "";
 $name = "";
 $address = "";
 $phone = "";
-$type = "";
-$department = "";
-$gender = "";
+$hotel_id = "";
 $error = "";
 
 //check to see that the form has been submitted
 if(isset($_POST['submit-form'])) { 
 
 	//retrieve the $_POST variables
-	$employeeID = $_POST['EmployeeID'];
+	$employee_id = $_POST['employee_id'];
 	$name = $_POST['name'];
 	$address = $_POST['address'];
 	$phone = $_POST['phone'];
-	$type = $_POST['type'];
-	$department = $_POST['department'];
-	$gender = $_POST['gender'];
+	$hotel_id = $_POST['hotel_id'];
 
 	//initialize variables for form validation
 	$success = true;
@@ -30,7 +26,7 @@ if(isset($_POST['submit-form'])) {
 
 	//validate that the form was filled out correctly
 	//check to see if user name already exists
-	if($userTools->checkEmployeeIdExists($employeeID))
+	if($userTools->checkEmployeeIdExists($employee_id))
 	{
 	    $error .= "That ID is already taken.<br/> \n\r";
 	    $success = false;
@@ -39,22 +35,20 @@ if(isset($_POST['submit-form'])) {
 	if($success)
 	{
 	    //prep the data for saving in a new user object
-	    $data['EmployeeID'] = $employeeID;
+	    $data['employee_id'] = $employee_id;
 	    $data['name'] = $name;
 	    $data['address'] = $address;
 	    $data['phone'] = $phone;
-	    $data['type'] = $type;
-	    $data['department'] = $department;
-	    $data['gender'] = $gender;
+		$data['hotel_id'] = $hotel_id;
 
 	    //create the new user object
 	    $newEmployee = new Employee($data);
 
 	    //save the new user to the database
-	    $newUser->save(true);
+	    $newEmployee->save(true);
 
 	    //log them in
-	    $userTools->employeeLogin($employeeID);
+	    $userTools->employeeLogin($employee_id);
 
 	    //redirect them to a guest page
 	    header("Location: employee.php");
@@ -75,13 +69,11 @@ if(isset($_POST['submit-form'])) {
 		<?php echo ($error != "") ? $error : ""; ?>
 		<form action="registerEmployee.php" method="post">
 	
-			Employee ID: <input type="text" value="<?php echo $employeeID; ?>" name="username" /><br/>
+			Employee ID: <input type="text" value="<?php echo $employee_id; ?>" name="username" /><br/>
 			Name: <input type="text" value="<?php echo $name; ?>" name="name" /><br/>
 			Address: <input type="text" value="<?php echo $address; ?>" name="address" /><br/>
-			Type (PT or FT): <input type="text" value="<?php echo $type; ?>" name="type" /><br/>
-			Department: <input type="text" value="<?php echo $department;?>" name="department" /><br/>
 			Phone: <input type="text" value="<?php echo $phone?>" name="phone" /><br/>
-			Gender: <input type="text" value="<?php echo $gender?>" name="gender"/><br/>
+			Hotel ID: <input type="text" value="<?php echo $hotel_id; ?>" name="type" /><br/>
 		<input type="submit" value="Register" name="submit-form" />
 	
 		</form>
