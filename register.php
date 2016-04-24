@@ -28,9 +28,14 @@ if(isset($_POST['submit-form'])) {
 	//check to see if user name already exists
 	if($userTools->checkUsernameExists($username))
 	{
-	    $error .= "That u
-	    		sername is already taken.<br/> \n\r";
+	    $error .= "That username is already taken.<br/> \n\r";
 	    $success = false;
+	}
+
+	if($userTools->checkGuestIdExists($guest_id))
+	{
+		$error .= "Account exists for that Guest ID.";
+		$success = false;
 	}
 
 	//check to see if passwords match
@@ -41,24 +46,17 @@ if(isset($_POST['submit-form'])) {
 
 	if($success)
 	{
-	    //prep the data for saving in a new user object
-	    $data['guest_id'] = $guest_id;
-	    $data['username'] = $username;
-	    $data['password'] = $password; //encrypt the password for storage
-	    $data['email'] = $email;
-
-	    //create the new user object
-	    $newUser = new User($data);
-
 	    //save the new user to the database
-	    $newUser->save(true);
-
-	    //log them in
-	    $userTools->login($username, $password);
-
-	    //redirect them to a guest page
-	    header("Location: guest.php");
-
+	    $result = $result = mysql_query("INSERT INTO user(guest_id, username, password, email) VALUES ('$guest_id','$username', '$password', '$email')");
+	    if($result){
+		    //log them in
+		    $userTools->login($username, $password);
+		    //redirect them to a guest page
+		    header("Location: guest.php");
+	    }
+	    else {
+		print("Error Creating User.");
+	    }
 	}
 
 }

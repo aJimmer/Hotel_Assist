@@ -18,8 +18,8 @@ Hello, <?php echo $employee->name; ?>. You are logged in. <a href="employeeLogou
 What would you like to do?
 <br/>
   <ul>
-    <li><a href="comingSoon.php">Add a Guest</a></li>
-    <li><a href="comingSoon.php">Accept a payment</a><br/></li>
+    <li><a href="checkRoom.php">Check Available Rooms</a></li>
+    <li><a href="makeReservation.php">Make a Reservation</a><br/></li>
   </ul>
 
 <?php else : ?>

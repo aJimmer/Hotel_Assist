@@ -24,9 +24,12 @@ href="logout.php">Logout</a> | <a href="settings.php">Change Email</a>
 What would you like to do?
 <br/>
   <ul>
-    <li><a href="comingSoon.php">Make A Reservation</a></li>
-    <li><a href="comingSoon.php">Request Facilities or Services</a></li>
-    <li><a href="comingSoon.php">Pay your bill</a><br/></li>
+    <li><a href="checkRoom.php">Check Available Rooms</a></li>
+    <li><a href="seeReservation.php">See Your Reservations</a></li>
+    <li><a href="makeReservation.php">Make A Reservation</a></li>
+    <li><a href="cancelReservation.php">Cancel Reservation</a></li>
+    <li><a href="payBill.php">Pay Bill</a></li>
+
   </ul>
 
 <?php else : ?>

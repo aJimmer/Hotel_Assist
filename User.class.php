@@ -39,17 +39,24 @@ class User {
 			$db->update($data, 'project.user', 'guest_id = '.$this->guest_id);
 		}else {
 			//if the user is being registered for the first time.
-			$data = array(
-					"username" => "'$this->username'",
-					"password" => "'$this->hashedPassword'",
-					"email" => "'$this->email'",
-							);
-				
-			$this->guest_id = $db->insert($data, 'project.user');
+
+			$result = mysql_query("INSERT INTO user(guest_id, username, password, email) VALUES ('$guest_id','$username', '$password', '$email')");
+			if (! $result) {
+				return false;
+			//	print("Error creating user.");
+			}
+
+
+//			$data = array(
+//					"guest_id" => "this->guest_id",
+//					"username" => "'$this->username'",
+//					"password" => "'$this->hashedPassword'",
+//					"email" => "'$this->email'",
+//							);
+//				
+//			$this->guest_id = $db->insert($data, 'project.user');
 		}
 		return true;
 	}
-
 }
-
 ?>

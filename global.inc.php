@@ -5,6 +5,8 @@ require_once 'Employee.class.php';
 require_once 'UserTools.class.php';
 require_once 'Db.class.php';
 
+$guestID;
+
 //connect to the database
 $db = new DB();
 $db->connect();

@@ -11,6 +11,7 @@ $password = "";
 if(isset($_POST['submit-login'])) {
 
 	$username = $_POST['username'];
+	$guestid = $username;
 	$password = $_POST['password'];
 
 	$userTools = new UserTools();

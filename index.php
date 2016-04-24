@@ -17,9 +17,9 @@ require_once 'global.inc.php';
 
   <nav>
   <ul> 
-    <li><a href="index.html">Home</a></li>
+    <li><a href="index.php">Home</a></li>
 	<li><a href="guest.php">Guest</a></li>
-	<li><a href = "employee.php">Employee </a></li>
+	<li><a href = "employeeLogin.php">Employee </a></li>
   </ul>
   </nav>
   <main>

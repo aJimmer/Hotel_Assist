@@ -43,6 +43,8 @@ class UserTools {
 			return false;
 		}
 	}
+
+
 	
 	//Log the user out. Destroy the session variables.
 	public function logout() {
@@ -82,6 +84,24 @@ class UserTools {
 			return true;
 		}
 	}
+
+	public function checkGuestIdExists($guest_id) {
+		$result = mysql_query("SELECT guest_id from guest where guest_id = '$guest_id'");
+		if (mysql_num_rows($result) == 0)
+			return false;
+		else
+			return true;
+	}
+
+	public function checkRoomAvailable($room_no, $hotel_no) {
+		$result = mysql_query("SELECT * FROM room WHERE room_no = '$room_no' and hotel_id = '$hotel_id'");
+
+		if (mysql_num_rows($result) == 0)
+			return true;
+		else
+			return false;
+	}
+
 
 	//get a user
 	//returns a User object. Takes the users id as an input

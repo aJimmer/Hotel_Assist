@@ -13,14 +13,13 @@ class DB {
 	protected $db_user = 'project';
 	protected $db_pass = 'password';
 	protected $db_host = '172.88.192.120';
-
 	
 	//open a connection to the database. Make sure this is called
 	//on every page that needs to use the database.
 	public function connect() {
 		$connection = mysql_connect($this->db_host, $this->db_user, $this->db_pass);
+		$conn = $connection;
 		mysql_select_db($this->db_name);
-
 		return true;
 	}
 

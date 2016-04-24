@@ -2,11 +2,10 @@
 
 require_once 'global.inc.php';
 
-$reservation_no = "";
 $guest_id = "";
 $start_date = "";
 $end_date = "";
-$room_no = ""; 
+$room_no = "";
 $hotel_id = "";
 
 if(isset($_POST['submit-form'])) {
@@ -15,43 +14,26 @@ if(isset($_POST['submit-form'])) {
 	$guest_id = $_POST['guest_id'];
 	$start_date = $_POST['start_date'];
 	$end_date = $_POST['end_date'];
+	$room_no = $_POST['room_no'];
+	$hotel_id = $_POST['hotel_id'];		
+	$userTool = new UserTools();
 	
-	//initialize variables for form validation
-	$success = true;
-	$userTools = new UserTools();
-
-	//validate that the form was filled out correctly
-
-
-
-	//check to see if passwords match
-	if($password != $password_confirm) {
-		$error .= "Passwords do not match.<br/> \n\r";
-		$success = false;
+	if($start_date == "" || $guest_id == ""  || $end_date = "" || room_no == "" || hotel_id == "") {
+		print("Please fill all fields.");		
 	}
-
-	if($success)
-	{
-		//prep the data for saving in a new user object
-		$data['guest_id'] = $guest_id;
-		$data['username'] = $username;
-		$data['password'] = $password; //encrypt the password for storage
-		$data['email'] = $email;
-
-		//create the new user object
-		$newUser = new User($data);
-
-		//save the new user to the database
-		$newUser->save(true);
-
-		//log them in
-		$userTools->login($username, $password);
-
-		//redirect them to a guest page
-		header("Location: guest.php");
-
+	else if(! $userTool->checkRoomAvailable($room_no,$hotel_id)){
+		print("The room is already taken.");	
 	}
-
+	else {
+		$result = mysql_query("INSERT INTO reservation(guest_id, start_date, end_date, room_no, hotel_id) values ($guest_id,'$start_date','$end_date','$room_no','$hotel_id')");
+		if (! $result) {
+			echo "Failed to create a reservation.";
+		}
+		else {
+			$result = mysql_query("UPDATE room SET status='unavailable' WHERE room_no = '$room_no' and hotel_id = $hotel_id");	
+			header("Location: guest.php");
+		}
+	}
 }
 
 
@@ -61,19 +43,23 @@ if(isset($_POST['submit-form'])) {
 ?>
 <html>
 <head>
-<title>Reservation</title>
+<title>Available Rooms</title>
+<meta charset="utf-8">
+<link href="casita.css" rel="stylesheet">
 </head>
-
-<body>
-<?php echo ($error != "") ? $error : ""; ?>
+	<body>
+	<?php echo ($error != "") ? $error : ""; ?>
+		<div id="wrapper">		
 		<form action="makeReservation.php" method="post">
 	
 			Guest Id: <input type = "text" value="<?php echo $guest_id; ?>" name= "guest_id" /><br/>
 			Start Date: <input type="text" value="<?php echo $start_date; ?>" name="start_date" /><br/>
 			End Date: <input type="text" value="<?php echo $end_date; ?>" name="end_date" /><br/>
-			
+			Room No: <input type="text" value="<?php echo $room_no; ?>" name="room_no" /><br/>
+			Hotel ID: <input type="text" value="<?php echo $hotel_id; ?>" name="hotel_id" /><br/>
 		<input type="submit" value="Register" name="submit-form" />
 	
 		</form>
+		</div>
 	</body>
 </html>
